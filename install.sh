@@ -16,3 +16,4 @@ brew install cask autodesk-fusion
 brew install cask logitech-options
 brew install cask anydesk
 brew install cask angry-ip-scanner
+brew install cask raspberry-pi-imager
