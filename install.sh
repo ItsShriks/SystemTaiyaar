@@ -32,6 +32,7 @@ brew install --cask microsoft-powerpoint
 brew install --cask creality-slicer
 brew install --cask cura
 brew install --cask asana
+brew install --cask chatgpt
 
 
 brew autoremove
