@@ -32,4 +32,6 @@ unset __conda_setup
 
 alias rosex="conda deactivate && source ~/miniconda3/bin/activate ros2"
 alias cdeactivate="conda deactivate && cd"
-
+alias crnd="cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/R\&D/ && conda activate rnd && clear"
+alias git-hack='~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ II/git-commit-date-changer-master/git-commit-date-changer'
+alias sdp="cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ II/ && conda deactivate && clear"
