@@ -1,4 +1,4 @@
-cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III
+#cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III
 eval "$(/opt/homebrew/bin/brew shellenv)"
 parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
