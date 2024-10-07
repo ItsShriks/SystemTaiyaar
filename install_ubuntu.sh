@@ -6,3 +6,4 @@ rm -rf ~/Videos/
 rm -rf ~/Pictures/
 rm -rf ~/Public/
 rm -rf ~/Documents/
+rm -rf ~/Templates/
