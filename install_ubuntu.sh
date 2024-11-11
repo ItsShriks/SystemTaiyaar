@@ -1,3 +1,5 @@
+#pip freeze > requirements.txt
+
 sudo ubuntu-drivers install #NVIDIA GPUs Only
 sudo apt install terminator
 sudo apt install git
@@ -10,3 +12,4 @@ rm -rf ~/Documents/
 rm -rf ~/Templates/
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh
+pip install -r requirements.txt
