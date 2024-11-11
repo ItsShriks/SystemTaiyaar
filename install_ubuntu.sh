@@ -3,7 +3,7 @@
 sudo ubuntu-drivers install #NVIDIA GPUs Only
 sudo apt install terminator
 sudo apt install git
-sudo snap install code
+sudo snap install --classic code
 rm -rf ~/Music/
 rm -rf ~/Videos/
 rm -rf ~/Pictures/
