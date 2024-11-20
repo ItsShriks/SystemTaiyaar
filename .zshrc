@@ -1,4 +1,4 @@
-#cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
@@ -32,6 +32,10 @@ unset __conda_setup
 
 alias rosex="conda deactivate && source ~/miniconda3/bin/activate ros2"
 alias cdeactivate="conda deactivate && cd"
-alias crnd="conda deactivate && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/R\&D/ && conda activate rnd && clear"
-alias git-hack='~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ II/git-commit-date-changer-master/git-commit-date-changer'
-alias sdp="cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ II/ && conda deactivate && clear"
+alias sem3rnd="conda deactivate && source ~/opt/anaconda3/bin/activate rnd && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/R\&D/ && clear"
+alias sem3rl= "conda deactivate && source ~/opt/anaconda3/bin/activate rl && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/Robot\ Learning/ && clear"
+alias sem3ml= "conda deactivate && source ~/opt/anaconda3/bin/activate ml && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/Machine\ Learning/ && clear"
+alias sem3rm= "conda deactivate && source ~/opt/anaconda3/bin/activate rm && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/Robot\ Manipulation/ && clear"
+alias sem3mrc="conda deactivate && source ~/opt/anaconda3/bin/activate mrc && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/MRC/ && clear"
+
+alias sem3="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III"
