@@ -18,6 +18,10 @@ RUN apt update && apt install -y \
     cmake \
     net-tools \
     x11-apps \
+    libboost-all-dev \
+    libeigen3-dev \
+    lsb-release \
+    software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
 # Accept build arguments with default values
