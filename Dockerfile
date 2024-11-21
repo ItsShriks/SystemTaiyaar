@@ -38,6 +38,7 @@ RUN useradd -m -s /bin/bash $USERNAME && \
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
+RUN git clone https://github.com/ItsShriks/SystemTaiyaar.git
 
 # Default command to run when the container starts
 CMD ["bash"]
