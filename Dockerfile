@@ -21,6 +21,7 @@ RUN apt update && apt install -y \
     libboost-all-dev \
     libeigen3-dev \
     lsb-release \
+    libkdl-parser-dev \
     software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
