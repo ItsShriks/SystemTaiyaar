@@ -13,33 +13,18 @@ NEWLINE=$'\n'
 setopt PROMPT_SUBST
 export PROMPT='${COLOR_DIR}%d ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
 clear
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 alias rosex="conda deactivate && source ~/miniconda3/bin/activate ros"
 alias rosex2="conda deactivate && source ~/miniconda3/bin/activate ros2"
-alias cdeactivate="conda deactivate && cd"
-alias sem3rnd="conda deactivate && source ~/opt/anaconda3/bin/activate rnd && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/R\&D/ && clear"
-alias sem3rl= "conda deactivate && source ~/opt/anaconda3/bin/activate rl && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/Robot\ Learning/ && clear"
-alias sem3ml= "conda deactivate && source ~/opt/anaconda3/bin/activate ml && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/Machine\ Learning/ && clear"
-alias sem3rm= "conda deactivate && source ~/opt/anaconda3/bin/activate rm && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/Robot\ Manipulation/ && clear"
-alias sem3mrc="conda deactivate && source ~/opt/anaconda3/bin/activate mrc && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III/MRC/ && clear"
-
+alias sem4rnd="conda deactivate && source ~/anaconda3/bin/activate rnd && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/R\&D/ && clear"
+alias sem4mrc="conda deactivate && source ~/anaconda3/bin/activate mrc && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/MRC/ && clear"
+alias sem4="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV"
+alias sem4dlf="conda deactivate && source ~/anaconda3/bin/activate dlf && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/DLF/ && clear"
+alias sem4dlrv="conda deactivate && source ~/anaconda3/bin/activate dlrv && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/DLRV/ && clear"
+alias sem4rdc="conda deactivate && source ~/anaconda3/bin/activate rdc && cd /Users/shrikar/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/RDC/ && clear"
 alias sem3="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ III"
+alias clc="clear && source ~/.zshrc"
+alias python="python3"
+
 # Function to center text
 center_text() {
     local term_width=$(tput cols)  # Get terminal width
@@ -79,4 +64,20 @@ ROS_MASTER_URI=$(echo "$ROS_MASTER_URI")
 [ -n "$BATTERY_PERCENT" ] && center_text "$CHARGING_ICON Battery: $BATTERY_PERCENT%"
 [ -n "$ROS_IP" ] && center_text "ROS_IP: $ROS_IP"
 [ -n "$ROS_MASTER_URI" ] && center_text "ROS_MASTER_URI: $ROS_MASTER_URI"
-export PATH="/Applications/Zed.app/Contents/MacOS:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/shrikar/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/shrikar/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/shrikar/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/shrikar/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+unset DYLD_LIBRARY_PATH
+unset LD_LIBRARY_PATH
