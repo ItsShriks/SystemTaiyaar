@@ -1,0 +1,37 @@
+# ================================
+# 🦾 ROS Environment Aliases
+# ================================
+
+# Activate ROS environment
+alias rosex="conda deactivate && source ~/miniconda3/bin/activate ros"
+# Activate ROS2 environment
+alias rosex2="conda deactivate && source ~/miniconda3/bin/activate ros2"
+
+# ================================
+# 📚 Academic Project Directories
+# ================================
+
+# Semester III Documents
+# Semester IV Base Directory
+alias sem4="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV"
+
+alias sem4rnd="conda deactivate && source ~/anaconda3/bin/activate rnd && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/R\&D/ && clear"
+alias sem4mrc="conda deactivate && source ~/anaconda3/bin/activate mrc && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/MRC/ && clear"
+alias sem4clr="conda deactivate && source ~/anaconda3/bin/activate clr && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/Collective_Robotics/ && clear && git pull"
+alias sem4dlf="conda deactivate && source ~/anaconda3/bin/activate dlf && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/DLF/ && clear"
+alias sem4dlrv="conda deactivate && source ~/anaconda3/bin/activate dlrv && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV/DLRV/ && clear"
+
+# ================================
+# 🔧 Utility Aliases
+# ================================
+
+alias clc="clear && source ~/.zshrc"
+#alias python="python3"
+
+# ================================
+# 🧼 Environment Cleanup
+# ================================
+
+# Unset potential library path conflicts
+unset DYLD_LIBRARY_PATH
+unset LD_LIBRARY_PATH
