@@ -2,6 +2,7 @@ brew install --cask anaconda
 brew install --cask angry-ip-scanner
 brew install --cask anydesk
 brew install --cask asana
+brew install atv-remote
 brew install --cask autodesk-fusion
 brew install --cask blender
 brew install --cask bluestacks
@@ -14,7 +15,7 @@ brew install --cask docker
 brew install --cask epic-games
 brew install --cask google-chrome
 brew install --cask grammarly
-brew install --cask logitech-options
+brew install --cask logi-options-plus
 brew install --cask mattermost
 brew install --cask microsoft-excel
 brew install --cask microsoft-powerpoint
