@@ -1,17 +1,30 @@
 #!/bin/bash
 
-echo -e "\n>>> Running: Homebrew Update"
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+SEPARATOR="${BLUE}------------------------------------------------------------${NC}"
+
+echo -e "\n$SEPARATOR"
+echo -e "${BLUE}>>> Running: Homebrew Update${NC}"
+echo -e "$SEPARATOR"
 brew update
-echo "Homebrew update completed"
+echo -e "${GREEN}Homebrew update completed${NC}"
 
-echo -e "\n>>> Running: Homebrew Upgrade"
+echo -e "\n$SEPARATOR"
+echo -e "${BLUE}>>> Running: Homebrew Upgrade${NC}"
+echo -e "$SEPARATOR"
 brew upgrade
-echo "Homebrew upgrade completed"
+echo -e "${GREEN}Homebrew upgrade completed${NC}"
 
-echo -e "\n>>> Running: conda update -n base -c defaults conda"
+echo -e "\n$SEPARATOR"
+echo -e "${BLUE}>>> Running: conda update -n base -c defaults conda${NC}"
+echo -e "$SEPARATOR"
 conda update -n base -c defaults conda -y
-echo "Base Conda update completed"
+echo -e "${GREEN}Base Conda update completed${NC}"
 
-echo -e "\n>>> Running: conda update --all"
+echo -e "\n$SEPARATOR"
+echo -e "${BLUE}>>> Running: conda update --all${NC}"
+echo -e "$SEPARATOR"
 conda update --all -y
-echo "All Conda packages update completed"
+echo -e "${GREEN}All Conda packages update completed${NC}"
