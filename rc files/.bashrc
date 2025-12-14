@@ -10,8 +10,6 @@ else
  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
 fi
 unset color_prompt force_color_prompt
-source /opt/ros/noetic/setup.bash
-
 # Function to center text
 center_text() {
     local term_width=$(tput cols)  # Get terminal width
