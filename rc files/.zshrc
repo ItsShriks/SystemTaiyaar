@@ -113,8 +113,7 @@ show_banner
 # 📂 Custom Aliases
 ########################################
 # Source .zsh_aliases from the same directory as this .zshrc
-[ -f "${0:A:h}/.zsh_aliases" ] && source "${0:A:h}/.zsh_aliases"
-
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
 ########################################
 # 📦 Library & User Paths
 ########################################
@@ -129,19 +128,18 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 ########################################
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/shrikar/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/shrikar/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/shrikar/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/shrikar/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/shrikar/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/shrikar/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/shrikar/miniconda3/bin:$PATH"
+        export PATH="/Users/shrikar/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
 ########################################
 # 📦 Pixi
 ########################################

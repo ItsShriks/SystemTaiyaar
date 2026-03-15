@@ -3,20 +3,15 @@
 # ================================
 
 # Activate ROS environment
-alias rosex="pixi shell -e noetic --manifest-path ~/robostack && export ROS_MASTER_URI=http://localhost:11311 && export ROS_IP=$(ipconfig getifaddr en0)"
+alias rosex="export ROS_MASTER_URI=http://localhost:11311 && export ROS_IP=\$(ipconfig getifaddr en0) && pixi shell -e noetic --manifest-path ~/robostack"
 # Activate ROS2 environment
-alias rosex2="pixi shell -e humble --manifest-path ~/robostack && export ROS_DOMAIN_ID=69"
+alias rosex2="export ROS_DOMAIN_ID=69 && pixi shell -e humble --manifest-path ~/robostack"
 
 # ================================
 # 📚 Academic Project Directories
 # ================================
 
-# Semester V
-
-alias sem4="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ IV"
-alias sem5="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ V"
-
-alias sem4SUBJECT="conda deactivate && source ~/anaconda3/bin/activate <SUBJECT> && cd ~/path/to/SUBJECT/ && clear"
+# alias sem4SUBJECT="conda deactivate && source ~/anaconda3/bin/activate <SUBJECT> && cd ~/path/to/SUBJECT/ && clear"
 
 # ================================
 # 🔧 Utility Aliases

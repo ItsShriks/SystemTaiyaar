@@ -48,6 +48,7 @@ show_banner() {
     # Get ROS environment variables
     ROS_IP=$(echo "$ROS_IP")
     ROS_MASTER_URI=$(echo "$ROS_MASTER_URI")
+    ROS_DOMAIN_ID=$(echo "$ROS_DOMAIN_ID")
 
     # --- Display Information ---
 
@@ -69,6 +70,7 @@ show_banner() {
     # Display ROS variables
     [ -n "$ROS_IP" ] && center_text "ROS_IP: $ROS_IP"
     [ -n "$ROS_MASTER_URI" ] && center_text "ROS_MASTER_URI: $ROS_MASTER_URI"
+    [ -n "$ROS_DOMAIN_ID" ] && center_text "ROS_DOMAIN_ID: $ROS_DOMAIN_ID"
 }
 
 # Run banner

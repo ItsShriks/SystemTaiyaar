@@ -18,13 +18,13 @@ brew upgrade
 echo -e "${GREEN}Homebrew upgrade completed${NC}"
 
 echo -e "\n$SEPARATOR"
-echo -e "${BLUE}>>> Running:🐍 conda update${NC}"
+echo -e "${BLUE}>>> 🐍 conda base update${NC}"
 echo -e "$SEPARATOR"
 conda update -n base -c defaults conda -y
 echo -e "${GREEN}Base Conda update completed${NC}"
 
 echo -e "\n$SEPARATOR"
-echo -e "${BLUE}>>> Running:🐍 conda update ${NC}"
+echo -e "${BLUE}>>> 🐍 conda update ${NC}"
 echo -e "$SEPARATOR"
 conda update --all -y
 echo -e "${GREEN}All Conda packages update completed${NC}"
@@ -37,20 +37,32 @@ echo -e "${GREEN}All Conda packages update completed${NC}"
 # SEPARATOR="${BLUE}------------------------------------------------------------${NC}"
 
 echo -e "\n$SEPARATOR"
-echo -e "${BLUE}>>> Running: Homebrew Clean${NC}"
+echo -e "${BLUE}>>> 🍺 Homebrew Clean${NC}"
 echo -e "$SEPARATOR"
 # brew cleanup -s
 brew cleanup
 echo -e "${GREEN}Brew Cleanup completed${NC}"
 
 echo -e "\n$SEPARATOR"
-echo -e "${BLUE}>>> Autoremoving Brew${NC}"
+echo -e "${BLUE}>>> 🍺 Autoremoving Brew${NC}"
 echo -e "$SEPARATOR"
 brew autoremove
 echo -e "${GREEN}Brew Autoremove completed${NC}"
 
 echo -e "\n$SEPARATOR"
-echo -e "${BLUE}>>> Running: conda clean --all -y${NC}"
+echo -e "${BLUE}>>> 🐍 conda Clean ${NC}"
 echo -e "$SEPARATOR"
 conda clean --all -y
 echo -e "${GREEN}Conda Cleanup completed${NC}"
+
+echo -e "\n$SEPARATOR"
+echo -e "${BLUE}>>> Moving Downloads to ☁️ Downloads${NC}"
+echo -e "$SEPARATOR"
+DEST="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Downloads"
+
+if compgen -G "$HOME/Downloads/*" > /dev/null; then
+    mv "$HOME"/Downloads/* "$DEST"
+    echo -e "${GREEN}Downloads moved to ☁️ successfully${NC}"
+else
+    echo -e "${BLUE}Downloads folder is empty — skipping${NC}"
+fi
