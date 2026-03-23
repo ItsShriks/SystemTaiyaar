@@ -144,3 +144,11 @@ unset __conda_setup
 # 📦 Pixi
 ########################################
 export PATH="/Users/shrikar/.pixi/bin:$PATH"
+
+########################################
+# 🔎 Search Function
+########################################
+
+google() {
+  open "https://www.google.com/search?q=$*"
+}
