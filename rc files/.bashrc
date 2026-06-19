@@ -1,4 +1,5 @@
 # Show git branch name
+export TERM=xterm-256color
 force_color_prompt=yes
 color_prompt=yes
 parse_git_branch() {
@@ -59,8 +60,8 @@ show_banner() {
     [ -n "$CURRENT_DATE_TIME" ] && center_text "📅 $CURRENT_DATE_TIME"
 
     # Display IP addresses
-    [ -n "$IP_ADDRESS" ] && center_text "📶 Wi-Fi (wlp3s0): $IP_ADDRESS"
-    [ -n "$ET_ADDRESS" ] && center_text "🌐 Ethernet (enp4s0f1): $ET_ADDRESS"
+    [ -n "$IP_ADDRESS" ] && center_text "📶 Wi-Fi : $IP_ADDRESS"
+    [ -n "$ET_ADDRESS" ] && center_text "🌐 Ethernet : $ET_ADDRESS"
 
     # NEW LOGIC: Only display battery if it is discharging or if the status is N/A
     if [ "$BATTERY_STATUS" == "discharging" ] || [ "$BATTERY_PERCENT" == "N/A" ]; then
@@ -80,3 +81,5 @@ show_banner
 if [ -f "$(dirname "${BASH_SOURCE[0]}")/.bash_aliases" ]; then
     . "$(dirname "${BASH_SOURCE[0]}")/.bash_aliases"
 fi
+
+source /opt/ros/humble/setup.bash
