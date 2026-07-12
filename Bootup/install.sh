@@ -8,15 +8,18 @@ brew install --cask blender
 brew install --cask bluestacks
 brew install --cask chatgpt
 brew install --cask cloudcompare
+brew install --cask claude
+brew install --cask claude-code
 brew install --cask creality-slicer
 brew install --cask cura
 brew install --cask discord
 brew install --cask docker
 brew install --cask epic-games
+brew install gemini-cli
 brew install --cask google-chrome
 brew install --cask google-drive
+brew install --cask google-gemini
 brew install --cask grammarly
-brew install --cask keynote
 brew install --cask logi-options-plus
 brew install mac-mouse-fix
 brew install mas
