@@ -28,6 +28,7 @@ brew install --cask microsoft-excel
 brew install --cask microsoft-powerpoint
 brew install --cask microsoft-word
 brew install --cask miniconda
+brew install --cask nordvpn
 brew install --cask notion
 brew install --cask numbers
 brew install --cask pages
