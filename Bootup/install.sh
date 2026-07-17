@@ -53,3 +53,14 @@ mas install 409183694 # Keynote
 
 brew autoremove
 brew cleanup
+
+# Setup SSH Keys
+echo ""
+echo "------------------------------------------------------------"
+echo "🔑 Would you like to run the SSH key setup script now? (y/n)"
+echo "------------------------------------------------------------"
+read -r response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    bash "$(dirname "$0")/ssh-keygen.sh"
+fi
+

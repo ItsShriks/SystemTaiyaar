@@ -13,3 +13,14 @@ rm -rf ~/Templates/
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh
 pip install -r requirements.txt
+
+# Setup SSH Keys
+echo ""
+echo "------------------------------------------------------------"
+echo "🔑 Would you like to run the SSH key setup script now? (y/n)"
+echo "------------------------------------------------------------"
+read -r response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    bash "$(dirname "$0")/ssh-keygen.sh"
+fi
+

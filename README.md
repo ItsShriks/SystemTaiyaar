@@ -10,7 +10,7 @@ Whether you're setting up a new system, reinstalling an OS, or configuring multi
 
 This project is logically divided into modules, each designed to configure a specific aspect of your system:
 
-- ⚡ **Bootup**: Essential system bootup scripts. Includes install scripts tailored for basic tools, system updates, and cleanup.
+- ⚡ **Bootup**: Essential system bootup scripts. Includes install scripts tailored for basic tools, SSH key generation and configuration, system updates, and cleanup.
 - 🐍 **conda_env**: Standardized environment definition files (`ros.yml`, `ros2.yml`) for setting up legacy Conda environments.
 - 🐳 **Docker**: Pre-configured Dockerfiles and environments layout to get containerized development environments up and running quickly.
 - 🐍 **py**: Python utility scripts designed to assist with system configurations and routine automated tasks.
@@ -22,9 +22,10 @@ This project is logically divided into modules, each designed to configure a spe
 
 ## ⚡ Bootup Scripts
 ```bash
-Bootup/install.sh # Installs essential tools
-Bootup/update.sh  # Updates packages and system
-Bootup/clean.sh   # Removes unnecessary clutter
+Bootup/install.sh    # Installs essential tools
+Bootup/ssh-keygen.sh # Generates and configures SSH keys (Ed25519)
+Bootup/update.sh     # Updates packages and system
+Bootup/clean.sh      # Removes unnecessary clutter
 ```
 
 ---
