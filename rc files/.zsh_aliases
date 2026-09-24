@@ -7,24 +7,130 @@ alias rosex="export ROS_MASTER_URI=http://localhost:11311 && export ROS_IP=\$(ip
 # Activate ROS2 environment
 alias rosex2="export ROS_DOMAIN_ID=69 && pixi shell -e humble --manifest-path ~/robostack"
 
+
 # ================================
 # 📚 Academic Project Directories
 # ================================
 
 # Semester V
-
 alias sem5="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ V"
-alias sem5mrc="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ V/MRC_I && conda activate mrc && clc"
-alias sem4SUBJECT="conda deactivate && source ~/anaconda3/bin/activate <SUBJECT> && cd ~/path/to/SUBJECT/ && clear"
+alias sem6="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ VI"
+alias sem6mt="conda deactivate && source ~/anaconda3/bin/activate porta && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ VI/Master_Thesis"
+# alias sem4SUBJECT="conda deactivate && source ~/anaconda3/bin/activate <SUBJECT> && cd ~/path/to/SUBJECT/ && clear"
+
 
 # ================================
-# 🔧 Utility Aliases
+# ⚡ Navigation & Directory Shortcuts
 # ================================
 
-alias clc="clear && show_banner"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+alias ls="ls -G"
+alias ll="ls -lhG"
+alias la="ls -lahG"
 alias of="open -a Finder ."
+
+
+# ================================
+# 🔧 Utility & System Aliases
+# ================================
+
+# Config & Environment
+alias reload="source ~/.zshrc && echo 'Zsh config reloaded!'"
+alias clc="clear && show_banner"
 alias python="python3"
-alias git-back="~/git-commit-date-changer"
+alias mjpython='$HOME/Library/Python/3.9/bin/mjpython'
+
+# macOS System & Network
+alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
+alias pubip="curl -s https://icanhazip.com"
+alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+alias afk="pmset displaysleepnow"
+
+# Local Server & Clipboard
+alias serve="python3 -m http.server 8000"
+alias clip="pbcopy <"              # Usage: clip file.txt
+alias paste="pbpaste"              # Outputs clipboard text to stdout
+alias beast="vncviewer shrikar22"
+
+
+# ================================
+# 🐙 Git Superpowers
+# ================================
+
+alias gp="git push"
+alias gs="git status"
+alias gundo="git reset --soft HEAD~1"
+alias glog="git log --graph --oneline --decorate --all"
+alias gpull="git pull --recurse-submodules"
+
+# alias git-back="~/git-commit-date-changer"
+
+
+# ================================
+# 🔧 Functions
+# ================================
+
+# Smart Git Commit (No quotes required!)
+# Usage: gcm updated sub-node parameters
+gcm() {
+  git add . && git commit -m "$*"
+}
+
+# Web Search
+# Usage: google ros2 humble launch files
+google() {
+  open "https://www.google.com/search?q=$*"
+}
+
+# Create a directory and enter it immediately
+# Usage: mkcd my_new_folder
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# Universal Extractor
+# Usage: extract archive.tar.gz
+extract() {
+  if [ -f "$1" ] ; then
+    case "$1" in
+      *.tar.bz2)   tar xjf "$1"     ;;
+      *.tar.gz)    tar xzf "$1"     ;;
+      *.bz2)       bunzip2 "$1"    ;;
+      *.rar)       unrar e "$1"     ;;
+      *.gz)        gunzip "$1"      ;;
+      *.tar)       tar xvf "$1"     ;;
+      *.tbz2)      tar xjf "$1"     ;;
+      *.tgz)       tar xzf "$1"     ;;
+      *.zip)       unzip "$1"       ;;
+      *.Z)         uncompress "$1" ;;
+      *.7z)        7z x "$1"        ;;
+      *)           echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Fast Process Termination
+# Usage: fnamekill python
+fnamekill() {
+  ps aux | grep -i "$1" | grep -v grep | awk '{print $2}' | xargs kill -9
+}
+
+# Change the date/time of the LAST commit
+# Usage: git-back "2026-08-01 14:00:00"
+git-back() {
+  if [ -z "$1" ]; then
+    echo "Usage: git-back \"YYYY-MM-DD HH:MM:SS\""
+    return 1
+  fi
+  GIT_COMMITTER_DATE="$1" git commit --amend --no-edit --date "$1"
+}
+
+
 # ================================
 # 🧼 Environment Cleanup
 # ================================

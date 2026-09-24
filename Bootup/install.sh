@@ -15,6 +15,7 @@ brew install --cask cura
 brew install --cask discord
 brew install --cask docker
 brew install --cask epic-games
+brew install --cask firefox
 brew install gemini-cli
 brew install --cask google-chrome
 brew install --cask google-drive
@@ -23,6 +24,7 @@ brew install --cask grammarly
 brew install --cask logi-options-plus
 brew install mac-mouse-fix
 brew install mas
+brew install --cask mactex
 brew install --cask mattermost
 brew install --cask microsoft-excel
 brew install --cask microsoft-powerpoint
@@ -63,4 +65,3 @@ read -r response
 if [[ "$response" =~ ^[Yy]$ ]]; then
     bash "$(dirname "$0")/ssh-keygen.sh"
 fi
-

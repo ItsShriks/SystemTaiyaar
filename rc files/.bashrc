@@ -74,6 +74,9 @@ show_banner() {
     [ -n "$ROS_DOMAIN_ID" ] && center_text "ROS_DOMAIN_ID: $ROS_DOMAIN_ID"
 }
 
+# Clear screen on shell startup
+clear
+
 # Run banner
 show_banner
 
@@ -83,3 +86,34 @@ if [ -f "$(dirname "${BASH_SOURCE[0]}")/.bash_aliases" ]; then
 fi
 
 source /opt/ros/humble/setup.bash
+
+########################################
+# 📦 Library & User Paths
+########################################
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+########################################
+# 🐍 Conda Setup (MUST BE LAST)
+########################################
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+########################################
+# 📦 Pixi & Antigravity
+########################################
+export PATH="$HOME/.pixi/bin:$PATH"
+# Added by Antigravity IDE
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
