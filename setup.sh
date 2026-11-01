@@ -26,8 +26,8 @@ usage() {
     cat <<USAGE
 Usage: ./setup.sh [all | <step> ...]
 
-  1) essentials   Homebrew, git, gh, glab, node, git identity
-  2) ssh          SSH key, linked to GitHub/GitLab
+  1) essentials   Homebrew, git, node, git identity
+  2) ssh          SSH key, shown and copied to the clipboard
   3) ros          Pixi and RoboStack (ROS/ROS2)
   4) clean        Homebrew, Conda and mac-cleaner-cli cleanup
   5) apps         Everything in the Brewfile

@@ -30,8 +30,8 @@ git clone --single-branch --branch macOS https://github.com/ItsShriks/SystemTaiy
 
 | Step | Script | What it does |
 |---|---|---|
-| `essentials` | `Bootup/essentials.sh` | Homebrew (with Xcode tools), git, gh, glab, node, git identity |
-| `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, added to GitHub and GitLab through `gh` and `glab`, then tested |
+| `essentials` | `Bootup/essentials.sh` | Homebrew (with Xcode tools), git, node, git identity |
+| `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, shown and copied to the clipboard for you to add to GitHub or GitLab |
 | `ros` | `Bootup/ROS.sh` | Pixi and the RoboStack environments in `~/robostack` |
 | `clean` | `Bootup/clean.sh` | Homebrew and Conda cleanup, then `npx mac-cleaner-cli` |
 | `apps` | `Bootup/install.sh` | Everything in the [Brewfile](Brewfile) |

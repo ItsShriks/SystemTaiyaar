@@ -1,5 +1,5 @@
 # Installed by ./setup.sh apps. Docker Desktop and XQuartz live in Bootup/docker.sh,
-# git, gh, glab and node in Bootup/essentials.sh, pixi in Bootup/ROS.sh.
+# git and node in Bootup/essentials.sh, pixi in Bootup/ROS.sh.
 
 # Formulae
 brew "gemini-cli"

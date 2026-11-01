@@ -17,7 +17,7 @@ if ! grep -qs "brew shellenv" "$HOME/.zprofile"; then
 fi
 
 section "Essentials"
-brew install git gh glab node || die "brew install failed"
+brew install git node || die "brew install failed"
 ok "Essentials installed"
 
 section "Git identity"

@@ -116,69 +116,26 @@ echo -e "$SEPARATOR"
 echo -e "Your public key is shown below:\n"
 cat "$PUB_KEY_PATH"
 
-KEY_TITLE="$(hostname)"
+echo
 
-manual_steps() {
-    warn "Add the public key above by hand: $1"
-}
-
-ensure_cli() {
-    command -v "$1" >/dev/null && return 0
-    if command -v brew >/dev/null; then
-        echo "$1 is needed to add the key for you, installing it..."
-        brew install "$1" && return 0
-    fi
-    warn "$1 is not installed, so the key can't be added for you. Run './setup.sh essentials' to install it."
-    return 1
-}
-
-verify_host() {
-    local out
-    # Test this key alone, so another key on the machine can't make it look linked
-    out=$(ssh -T -i "$KEY_PATH" -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new "git@$1" 2>&1)
-    case "$out" in
-        *successfully*|*Welcome*) ok "SSH to $1 works: $out" ;;
-        *) warn "SSH to $1 not working yet: $out" ;;
-    esac
-}
-
-link_github() {
-    section "Link to GitHub"
-    if ! ensure_cli gh; then
-        manual_steps "https://github.com/settings/keys"
-        return
-    fi
-    gh auth status --hostname github.com >/dev/null 2>&1 ||
-        gh auth login --hostname github.com --git-protocol ssh --skip-ssh-key --web --scopes admin:public_key
-    if ! gh ssh-key add "$PUB_KEY_PATH" --title "$KEY_TITLE"; then
-        # An older login may not have the scope needed to add keys
-        gh auth refresh --hostname github.com --scopes admin:public_key &&
-            gh ssh-key add "$PUB_KEY_PATH" --title "$KEY_TITLE" ||
-            manual_steps "https://github.com/settings/keys"
-    fi
-    verify_host github.com
-}
-
-link_gitlab() {
-    local host
-    section "Link to GitLab"
-    read -r -p "GitLab host [gitlab.com]: " host
-    host="${host:-gitlab.com}"
-    if ! ensure_cli glab; then
-        manual_steps "https://$host/-/user_settings/ssh_keys"
-        return
-    fi
-    glab auth status --hostname "$host" >/dev/null 2>&1 || glab auth login --hostname "$host"
-    # Fails when the key is already on the account, so verify_host has the final word
-    GITLAB_HOST="$host" glab ssh-key add "$PUB_KEY_PATH" --title "$KEY_TITLE" ||
-        manual_steps "https://$host/-/user_settings/ssh_keys"
-    verify_host "$host"
-}
-
-if [ -t 0 ]; then
-    echo
-    if confirm "Link this key to GitHub?" y; then link_github; fi
-    if confirm "Link this key to GitLab?" y; then link_gitlab; fi
+# pbcopy on macOS, wl-copy on Wayland, xclip on X11
+if command -v pbcopy >/dev/null; then
+    COPY_CMD="pbcopy"
+elif [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-copy >/dev/null; then
+    COPY_CMD="wl-copy"
+elif [ -n "${DISPLAY:-}" ] && command -v xclip >/dev/null; then
+    COPY_CMD="xclip -selection clipboard"
 else
-    manual_steps "https://github.com/settings/keys or https://gitlab.com/-/user_settings/ssh_keys"
+    COPY_CMD=""
 fi
+
+if [ -n "$COPY_CMD" ] && $COPY_CMD < "$PUB_KEY_PATH" >/dev/null 2>&1; then
+    ok "📋 Public key copied to your clipboard."
+else
+    warn "Could not copy to the clipboard, so copy the key above by hand."
+fi
+
+echo -e "\nAdd it to your accounts:"
+echo -e "  GitHub: ${BLUE}https://github.com/settings/keys${NC}"
+echo -e "  GitLab: ${BLUE}https://gitlab.com/-/user_settings/ssh_keys${NC} (or the same page on your own GitLab)"
+echo -e "\nThen test it with: ssh -T git@github.com"
