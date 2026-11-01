@@ -9,7 +9,7 @@ Sets up a fresh Mac and keeps its rc files. This is the **macOS** branch; Linux 
 This detects the OS, clones only the matching branch to `~/SystemTaiyaar`, and opens the menu:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ItsShriks/SystemTaiyaar/main/bootstrap.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ItsShriks/SystemTaiyaar/macOS/bootstrap.sh)"
 ```
 
 Or clone it yourself:
