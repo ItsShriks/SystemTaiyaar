@@ -127,20 +127,20 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 ########################################
 # 🐍 Conda Setup (MUST BE LAST)
 ########################################
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/anaconda3/bin:$PATH"
+# Works wherever conda was installed (installer or Homebrew cask)
+for __conda_root in "$HOME/miniforge3" "$HOME/miniconda3" "$HOME/anaconda3" \
+    /opt/homebrew/Caskroom/miniforge/base /opt/homebrew/Caskroom/miniconda/base /opt/homebrew/anaconda3; do
+    if [ -x "$__conda_root/bin/conda" ]; then
+        eval "$("$__conda_root/bin/conda" shell.zsh hook 2> /dev/null)"
+        if [ -x "$__conda_root/bin/mamba" ]; then
+            export MAMBA_EXE="$__conda_root/bin/mamba"
+            export MAMBA_ROOT_PREFIX="$__conda_root"
+            eval "$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+        fi
+        break
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+done
+unset __conda_root
 
 ########################################
 # 📦 Pixi & Antigravity

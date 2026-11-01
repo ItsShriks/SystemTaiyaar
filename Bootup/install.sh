@@ -1,67 +1,19 @@
-brew install --cask anaconda
-brew install --cask angry-ip-scanner
-brew install --cask anydesk
-brew install --cask asana
-brew install atv-remote
-brew install --cask autodesk-fusion
-brew install --cask blender
-brew install --cask bluestacks
-brew install --cask chatgpt
-brew install --cask cloudcompare
-brew install --cask claude
-brew install --cask claude-code
-brew install --cask creality-slicer
-brew install --cask cura
-brew install --cask discord
-brew install --cask docker
-brew install --cask epic-games
-brew install --cask firefox
-brew install gemini-cli
-brew install --cask google-chrome
-brew install --cask google-drive
-brew install --cask google-gemini
-brew install --cask grammarly
-brew install --cask logi-options-plus
-brew install mac-mouse-fix
-brew install mas
-brew install --cask mactex
-brew install --cask mattermost
-brew install --cask microsoft-excel
-brew install --cask microsoft-powerpoint
-brew install --cask microsoft-word
-brew install --cask miniconda
-brew install --cask nordvpn
-brew install --cask notion
-brew install --cask numbers
-brew install --cask pages
-brew install --cask pycharm
-brew install --cask raspberry-pi-imager
-brew install --cask slack
-brew install --cask steam
-brew install --cask telegram
-brew install --cask visual-studio-code
-brew install --cask vlc
-brew install --cask vmware-fusion
-brew install --cask vnc-viewer
-brew install --cask webex
-brew install --cask whatsapp
-brew install --cask zed
-brew install --cask zoom
-brew install --cask zotero
+#!/bin/bash
+set -uo pipefail
+source "$(dirname "$0")/lib.sh"
 
-mas install 409203825 # Numbers
-mas install 409201541 # Pages
-mas install 409183694 # Keynote
+command -v brew >/dev/null || die "Homebrew not found, run './setup.sh essentials' first"
 
+section "Installing everything in the Brewfile"
+warn "App Store apps need you to be signed in to the App Store first."
+status=0
+brew bundle --file "$REPO_DIR/Brewfile" || status=1
+
+section "Tidying up"
 brew autoremove
 brew cleanup
 
-# Setup SSH Keys
-echo ""
-echo "------------------------------------------------------------"
-echo "🔑 Would you like to run the SSH key setup script now? (y/n)"
-echo "------------------------------------------------------------"
-read -r response
-if [[ "$response" =~ ^[Yy]$ ]]; then
-    bash "$(dirname "$0")/ssh-keygen.sh"
+if [ $status -ne 0 ]; then
+    warn "Some Brewfile entries failed, see above. Re-run to retry only those."
 fi
+exit $status

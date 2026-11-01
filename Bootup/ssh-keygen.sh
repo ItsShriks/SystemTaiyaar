@@ -1,12 +1,6 @@
 #!/bin/bash
 
-# Color definitions
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-SEPARATOR="${BLUE}------------------------------------------------------------${NC}"
+source "$(dirname "$0")/lib.sh"
 
 echo -e "\n$SEPARATOR"
 echo -e "🔑 SSH Key Generator & Setup System"
@@ -109,13 +103,63 @@ else
 fi
 
 echo -e "$SEPARATOR"
-echo -e "${GREEN}🎉 SSH key setup successfully completed!${NC}"
+echo -e "${GREEN}🎉 SSH key is ready!${NC}"
 echo -e "$SEPARATOR"
 echo -e "Your public key is shown below:\n"
 cat "$PUB_KEY_PATH"
-echo -e "\n$SEPARATOR"
-echo -e "📋 To add this key to your GitHub account:"
-echo -e "1. Copy the public key above."
-echo -e "2. Go to: ${BLUE}https://github.com/settings/keys${NC}"
-echo -e "3. Click 'New SSH key', paste it, and save."
-echo -e "$SEPARATOR\n"
+
+KEY_TITLE="$(hostname)"
+
+manual_steps() {
+    warn "Add the public key above by hand: $1"
+}
+
+verify_host() {
+    local out
+    out=$(ssh -T -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new "git@$1" 2>&1)
+    case "$out" in
+        *successfully*|*Welcome*) ok "SSH to $1 works: $out" ;;
+        *) warn "SSH to $1 not working yet: $out" ;;
+    esac
+}
+
+link_github() {
+    section "Link to GitHub"
+    if ! command -v gh >/dev/null; then
+        manual_steps "https://github.com/settings/keys"
+        return
+    fi
+    gh auth status --hostname github.com >/dev/null 2>&1 ||
+        gh auth login --hostname github.com --git-protocol ssh --skip-ssh-key --web --scopes admin:public_key
+    if ! gh ssh-key add "$PUB_KEY_PATH" --title "$KEY_TITLE"; then
+        # An older login may not have the scope needed to add keys
+        gh auth refresh --hostname github.com --scopes admin:public_key &&
+            gh ssh-key add "$PUB_KEY_PATH" --title "$KEY_TITLE" ||
+            manual_steps "https://github.com/settings/keys"
+    fi
+    verify_host github.com
+}
+
+link_gitlab() {
+    local host
+    section "Link to GitLab"
+    read -r -p "GitLab host [gitlab.com]: " host
+    host="${host:-gitlab.com}"
+    if ! command -v glab >/dev/null; then
+        manual_steps "https://$host/-/user_settings/ssh_keys"
+        return
+    fi
+    glab auth status --hostname "$host" >/dev/null 2>&1 || glab auth login --hostname "$host"
+    # Fails when the key is already on the account, so verify_host has the final word
+    GITLAB_HOST="$host" glab ssh-key add "$PUB_KEY_PATH" --title "$KEY_TITLE" ||
+        manual_steps "https://$host/-/user_settings/ssh_keys"
+    verify_host "$host"
+}
+
+if [ -t 0 ]; then
+    echo
+    if confirm "Link this key to GitHub?" y; then link_github; fi
+    if confirm "Link this key to GitLab?" y; then link_gitlab; fi
+else
+    manual_steps "https://github.com/settings/keys or https://gitlab.com/-/user_settings/ssh_keys"
+fi

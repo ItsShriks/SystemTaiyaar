@@ -1,25 +1,36 @@
 #!/bin/bash
+set -uo pipefail
+source "$(dirname "$0")/lib.sh"
 
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-SEPARATOR="${BLUE}------------------------------------------------------------${NC}"
+MAC_CLEANER_VERSION="1.3.5" # Pinned because it deletes files; bump after checking a new release
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: Homebrew Clean${NC}"
-echo -e "$SEPARATOR"
-# brew cleanup -s
-brew cleanup
-echo -e "${GREEN}Brew Cleanup completed${NC}"
+section "Running: Homebrew Clean"
+if command -v brew >/dev/null; then
+    # brew cleanup -s
+    brew cleanup
+    ok "Brew Cleanup completed"
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Autoremoving Brew${NC}"
-echo -e "$SEPARATOR"
-brew autoremove
-echo -e "${GREEN}Brew Autoremove completed${NC}"
+    section "Autoremoving Brew"
+    brew autoremove
+    ok "Brew Autoremove completed"
+else
+    warn "Homebrew not found, skipping"
+fi
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: conda clean --all -y${NC}"
-echo -e "$SEPARATOR"
-conda clean --all -y
-echo -e "${GREEN}Conda Cleanup completed${NC}"
+section "Running: conda clean --all -y"
+if CONDA_BIN="$(find_conda)"; then
+    "$CONDA_BIN" clean --all -y
+    ok "Conda Cleanup completed"
+else
+    warn "Conda not found, skipping"
+fi
+
+section "Running: mac-cleaner-cli"
+if ! command -v npx >/dev/null; then
+    warn "npx not found, run './setup.sh essentials' first. Skipping"
+elif [ ! -t 0 ]; then
+    warn "mac-cleaner-cli asks what to delete and needs a terminal. Skipping"
+else
+    # Interactive: it scans, then lets you pick what to delete
+    npx --yes "mac-cleaner-cli@$MAC_CLEANER_VERSION"
+fi

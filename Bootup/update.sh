@@ -1,30 +1,23 @@
 #!/bin/bash
+set -uo pipefail
+source "$(dirname "$0")/lib.sh"
 
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-SEPARATOR="${BLUE}------------------------------------------------------------${NC}"
-
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: Homebrew Update${NC}"
-echo -e "$SEPARATOR"
+section "Running: Homebrew Update"
 brew update
-echo -e "${GREEN}Homebrew update completed${NC}"
+ok "Homebrew update completed"
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: Homebrew Upgrade${NC}"
-echo -e "$SEPARATOR"
+section "Running: Homebrew Upgrade"
 brew upgrade
-echo -e "${GREEN}Homebrew upgrade completed${NC}"
+ok "Homebrew upgrade completed"
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: conda update -n base -c defaults conda${NC}"
-echo -e "$SEPARATOR"
-conda update -n base -c defaults conda -y
-echo -e "${GREEN}Base Conda update completed${NC}"
+if CONDA_BIN="$(find_conda)"; then
+    section "Running: conda update -n base conda"
+    "$CONDA_BIN" update -n base conda -y
+    ok "Base Conda update completed"
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: conda update --all${NC}"
-echo -e "$SEPARATOR"
-conda update --all -y
-echo -e "${GREEN}All Conda packages update completed${NC}"
+    section "Running: conda update --all"
+    "$CONDA_BIN" update -n base --all -y
+    ok "All Conda packages update completed"
+else
+    warn "Conda not found, skipping"
+fi

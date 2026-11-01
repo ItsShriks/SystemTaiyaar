@@ -15,7 +15,7 @@ alias rosex2="export ROS_DOMAIN_ID=69 && pixi shell -e humble --manifest-path ~/
 # Semester V
 alias sem5="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ V"
 alias sem6="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ VI"
-alias sem6mt="conda deactivate && source ~/anaconda3/bin/activate porta && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ VI/Master_Thesis"
+alias sem6mt="conda deactivate && conda activate porta && cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/Sem\ VI/Master_Thesis"
 # alias sem4SUBJECT="conda deactivate && source ~/anaconda3/bin/activate <SUBJECT> && cd ~/path/to/SUBJECT/ && clear"
 
 
