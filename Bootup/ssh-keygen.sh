@@ -41,6 +41,14 @@ if [ "$GENERATE_KEY" = true ]; then
     read -p "[$DEFAULT_EMAIL]: " EMAIL
     EMAIL="${EMAIL:-$DEFAULT_EMAIL}"
     
+    # Keep the old key, since anything still using it would otherwise lose access
+    if [ -f "$KEY_PATH" ]; then
+        OLD_SUFFIX="old-$(date +%Y%m%d-%H%M%S)"
+        mv "$KEY_PATH" "$KEY_PATH.$OLD_SUFFIX"
+        [ -f "$PUB_KEY_PATH" ] && mv "$PUB_KEY_PATH" "$KEY_PATH.$OLD_SUFFIX.pub"
+        warn "Moved the old key to $KEY_PATH.$OLD_SUFFIX"
+    fi
+
     echo -e "\nGenerating new Ed25519 SSH key..."
     ssh-keygen -t ed25519 -C "$EMAIL" -f "$KEY_PATH"
     
@@ -114,9 +122,20 @@ manual_steps() {
     warn "Add the public key above by hand: $1"
 }
 
+ensure_cli() {
+    command -v "$1" >/dev/null && return 0
+    if command -v brew >/dev/null; then
+        echo "$1 is needed to add the key for you, installing it..."
+        brew install "$1" && return 0
+    fi
+    warn "$1 is not installed, so the key can't be added for you. Run './setup.sh essentials' to install it."
+    return 1
+}
+
 verify_host() {
     local out
-    out=$(ssh -T -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new "git@$1" 2>&1)
+    # Test this key alone, so another key on the machine can't make it look linked
+    out=$(ssh -T -i "$KEY_PATH" -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new "git@$1" 2>&1)
     case "$out" in
         *successfully*|*Welcome*) ok "SSH to $1 works: $out" ;;
         *) warn "SSH to $1 not working yet: $out" ;;
@@ -125,7 +144,7 @@ verify_host() {
 
 link_github() {
     section "Link to GitHub"
-    if ! command -v gh >/dev/null; then
+    if ! ensure_cli gh; then
         manual_steps "https://github.com/settings/keys"
         return
     fi
@@ -145,7 +164,7 @@ link_gitlab() {
     section "Link to GitLab"
     read -r -p "GitLab host [gitlab.com]: " host
     host="${host:-gitlab.com}"
-    if ! command -v glab >/dev/null; then
+    if ! ensure_cli glab; then
         manual_steps "https://$host/-/user_settings/ssh_keys"
         return
     fi
