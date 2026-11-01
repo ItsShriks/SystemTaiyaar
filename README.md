@@ -9,7 +9,7 @@ Sets up a fresh Ubuntu machine and keeps its rc files. This is the **Ubuntu** br
 This detects the OS, clones only the matching branch to `~/SystemTaiyaar`, and opens the menu:
 
 ```bash
-bash -c "$(wget -qO- https://raw.githubusercontent.com/ItsShriks/SystemTaiyaar/main/bootstrap.sh)"
+bash -c "$(wget -qO- https://raw.githubusercontent.com/ItsShriks/SystemTaiyaar/macOS/bootstrap.sh)"
 ```
 
 Or clone it yourself:
