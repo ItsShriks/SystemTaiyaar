@@ -1,25 +1,16 @@
 #!/bin/bash
+set -uo pipefail
+source "$(dirname "$0")/lib.sh"
 
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-SEPARATOR="${BLUE}------------------------------------------------------------${NC}"
+section "Running: conda clean --all -y"
+if CONDA_BIN="$(find_conda)"; then
+    "$CONDA_BIN" clean --all -y
+    ok "Conda Cleanup completed"
+else
+    warn "Conda not found, skipping"
+fi
 
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: Homebrew Clean${NC}"
-echo -e "$SEPARATOR"
-# brew cleanup -s
-brew cleanup
-echo -e "${GREEN}Brew Cleanup completed${NC}"
-
-echo -e "\n$SEPARATOR"
-echo -e ">>> Autoremoving Brew${NC}"
-echo -e "$SEPARATOR"
-brew autoremove
-echo -e "${GREEN}Brew Autoremove completed${NC}"
-
-echo -e "\n$SEPARATOR"
-echo -e ">>> Running: conda clean --all -y${NC}"
-echo -e "$SEPARATOR"
-conda clean --all -y
-echo -e "${GREEN}Conda Cleanup completed${NC}"
+section "Running: apt autoremove and clean"
+sudo apt-get autoremove -y
+sudo apt-get clean
+ok "Apt Cleanup completed"

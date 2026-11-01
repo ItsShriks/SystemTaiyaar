@@ -1,73 +1,45 @@
-# 🛠️ System Taiyaar 🚀
+# 🛠️ System Taiyaar 🚀 (Ubuntu)
 
-**System Taiyaar** is a complete setup toolkit for automating the configuration of development environments on **Ubuntu** 🐧 and **macOS** .
-
-Whether you're setting up a new system, reinstalling an OS, or configuring multiple machines for robotics or development work, **System Taiyaar** gets you productive — fast and clean.
+Sets up a fresh Ubuntu machine and keeps its rc files. This is the **Ubuntu** branch; Macs use the [macOS](https://github.com/ItsShriks/SystemTaiyaar/tree/macOS) branch.
 
 ---
 
-## ⚙️ Features & Project Structure
+## ⚡ Quick Start
 
-This project is logically divided into modules, each designed to configure a specific aspect of your system:
+This detects the OS, clones only the matching branch to `~/SystemTaiyaar`, and opens the menu:
 
-- ⚡ **Bootup**: Essential system bootup scripts. Includes install scripts tailored for basic tools, SSH key generation and configuration, system updates, and cleanup.
-- 🐍 **conda_env**: Standardized environment definition files (`ros.yml`, `ros2.yml`) for setting up legacy Conda environments.
-- 🐳 **Docker**: Pre-configured Dockerfiles and environments layout to get containerized development environments up and running quickly.
-- 🐍 **py**: Python utility scripts designed to assist with system configurations and routine automated tasks.
-- 💻 **rc files**: Ready-to-use configuration dotfiles for your terminal (`.bashrc`, `.zshrc`, `aliases`) for maximum productivity.
-- 🤖 **robostack**: Setup guides and configurations for installing ROS distributions cleanly via Robostack.
-- 📦 **Pixi**: Integrating support for `pixi` configurations to replace or complement traditional Conda environments.
-
----
-
-## ⚡ Bootup Scripts
 ```bash
-Bootup/install.sh    # Installs essential tools
-Bootup/ssh-keygen.sh # Generates and configures SSH keys (Ed25519)
-Bootup/update.sh     # Updates packages and system
-Bootup/clean.sh      # Removes unnecessary clutter
+bash -c "$(wget -qO- https://raw.githubusercontent.com/ItsShriks/SystemTaiyaar/main/bootstrap.sh)"
+```
+
+Or clone it yourself:
+
+```bash
+git clone --single-branch --branch Ubuntu https://github.com/ItsShriks/SystemTaiyaar.git ~/SystemTaiyaar
 ```
 
 ---
 
-## 📦 Pixi Configuration
+## ⚙️ Steps
 
-For detailed documentation, please refer to the official [RoboStack Getting Started Guide](https://robostack.github.io/GettingStarted.html).
-
-### How to use Pixi:
-
-1. **Install Pixi**:
-   ```bash
-   curl -fsSL https://pixi.sh/install.sh | bash
-   ```
-2. **Initialize a new Pixi project**:
-   ```bash
-   pixi init robostack
-   cd robostack
-   ```
-3. **Add Dependencies** (Optional):
-   ```bash
-   pixi add python
-   pixi add ros-humble-desktop
-   ```
-4. **Install the Environment**:
-   ```bash
-   pixi install
-   ```
-5. **Run a Command Directly** (without entering shell):
-   ```bash
-   pixi shell -e humble
-   ```
-
----
-
-You can refer to the alias to initialize ros2 [here](rc%20files/.zsh_aliases#L8)
-
-## 🐍 Conda Setup (Alternative)
 ```bash
-conda env create -f conda_env/ros.yml
-conda env create -f conda_env/ros2.yml
+./setup.sh              # Menu
+./setup.sh all          # essentials rc ssh apps docker ros
+./setup.sh ssh docker   # Just these steps
 ```
+
+| Step | Script | What it does |
+|---|---|---|
+| `essentials` | `Bootup/essentials.sh` | git, build tools, gh, glab, git identity |
+| `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, added to GitHub and GitLab through `gh` and `glab`, then tested |
+| `ros` | `Bootup/ROS.sh` | ROS2 Humble from the official apt repository (Ubuntu 22.04 only) |
+| `clean` | `Bootup/clean.sh` | Conda and apt cleanup |
+| `apps` | `Bootup/install.sh` | terminator, VS Code, NVIDIA drivers if there is a GPU, Miniconda, `requirements.txt` if present |
+| `docker` | `Bootup/docker.sh` | Docker Engine and Compose from Docker's apt repository, optional image build |
+| `rc` | `Bootup/rc.sh` | Links `rc files/` into `$HOME`, backing up what was there to `~/.system-taiyaar-backup` |
+| `update` | `Bootup/update.sh` | Updates apt, snap and Conda packages |
+
+Every step can be re-run safely. `clean` and `update` are not part of `all`.
 
 ---
 

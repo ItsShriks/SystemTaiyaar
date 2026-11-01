@@ -1,7 +1,6 @@
 # Use the official Ubuntu 20.04 image
 FROM ubuntu:20.04
 
-ENV DISPLAY=host.docker.internal:0
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update package lists and install necessary packages

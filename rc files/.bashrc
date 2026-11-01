@@ -1,3 +1,6 @@
+# Only for interactive shells, so ssh commands and scp stay clean
+case $- in *i*) ;; *) return ;; esac
+
 # Show git branch name
 export TERM=xterm-256color
 force_color_prompt=yes
@@ -85,7 +88,7 @@ if [ -f "$(dirname "${BASH_SOURCE[0]}")/.bash_aliases" ]; then
     . "$(dirname "${BASH_SOURCE[0]}")/.bash_aliases"
 fi
 
-source /opt/ros/humble/setup.bash
+[ -f /opt/ros/humble/setup.bash ] && source /opt/ros/humble/setup.bash
 
 ########################################
 # 📦 Library & User Paths
@@ -96,20 +99,14 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 ########################################
 # 🐍 Conda Setup (MUST BE LAST)
 ########################################
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/anaconda3/bin:$PATH"
+# Works wherever conda was installed
+for __conda_root in "$HOME/miniconda3" "$HOME/miniforge3" "$HOME/anaconda3"; do
+    if [ -x "$__conda_root/bin/conda" ]; then
+        eval "$("$__conda_root/bin/conda" shell.bash hook 2> /dev/null)"
+        break
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+done
+unset __conda_root
 
 ########################################
 # 📦 Pixi & Antigravity
