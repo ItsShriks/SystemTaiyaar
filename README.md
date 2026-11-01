@@ -30,8 +30,8 @@ git clone --single-branch --branch Ubuntu https://github.com/ItsShriks/SystemTai
 
 | Step | Script | What it does |
 |---|---|---|
-| `essentials` | `Bootup/essentials.sh` | git, build tools, gh, glab, git identity |
-| `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, added to GitHub and GitLab through `gh` and `glab`, then tested |
+| `essentials` | `Bootup/essentials.sh` | git, build tools, git identity |
+| `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, shown and copied to the clipboard for you to add to GitHub or GitLab |
 | `ros` | `Bootup/ROS.sh` | ROS2 Humble from the official apt repository (Ubuntu 22.04 only) |
 | `clean` | `Bootup/clean.sh` | Conda and apt cleanup |
 | `apps` | `Bootup/install.sh` | terminator, VS Code, NVIDIA drivers if there is a GPU, Miniconda, `requirements.txt` if present |

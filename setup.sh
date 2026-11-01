@@ -26,8 +26,8 @@ usage() {
     cat <<USAGE
 Usage: ./setup.sh [all | <step> ...]
 
-  1) essentials   git, gh, glab and build tools, git identity
-  2) ssh          SSH key, linked to GitHub/GitLab
+  1) essentials   git, build tools, git identity
+  2) ssh          SSH key, shown and copied to the clipboard
   3) ros          ROS2 Humble (Ubuntu 22.04)
   4) clean        Conda and apt cleanup
   5) apps         Apps, Miniconda and Python packages
