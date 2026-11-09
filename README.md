@@ -34,7 +34,7 @@ git clone --single-branch --branch macOS https://github.com/ItsShriks/SystemTaiy
 | `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, shown and copied to the clipboard for you to add to GitHub or GitLab |
 | `ros` | `Bootup/ROS.sh` | Pixi and the RoboStack environments in `~/robostack` |
 | `clean` | `Bootup/clean.sh` | Homebrew and Conda cleanup, then `npx mac-cleaner-cli` |
-| `apps` | `Bootup/install.sh` | Everything in the [Brewfile](Brewfile) |
+| `apps` | `Bootup/install.sh` | Checkbox menu of the [Brewfile](Brewfile) apps, then installs what stays ticked |
 | `docker` | `Bootup/docker.sh` | Docker Desktop and XQuartz, optional image build |
 | `rc` | `Bootup/rc.sh` | Links `rc files/` into `$HOME`, backing up what was there to `~/.system-taiyaar-backup` |
 | `update` | `Bootup/update.sh` | Updates Homebrew and Conda packages |

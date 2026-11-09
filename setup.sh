@@ -30,7 +30,7 @@ Usage: ./setup.sh [all | <step> ...]
   2) ssh          SSH key, shown and copied to the clipboard
   3) ros          Pixi and RoboStack (ROS/ROS2)
   4) clean        Homebrew, Conda and mac-cleaner-cli cleanup
-  5) apps         Everything in the Brewfile
+  5) apps         Pick apps from the Brewfile and install them
   6) docker       Docker Desktop and XQuartz
   7) rc           Link the rc files into \$HOME
   8) update       Update Homebrew and Conda packages
