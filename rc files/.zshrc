@@ -11,22 +11,6 @@ parse_git_branch() {
 }
 
 ########################################
-# 📁 Path Shortener Function           #
-# Shows: ~/First/…/Last directory      #
-########################################
-shorten_path() {
-    local fullpath="${PWD/#$HOME/~}"
-    local base=$(basename "$fullpath")
-    local first=$(echo "$fullpath" | cut -d/ -f2)
-
-    if [[ "$fullpath" == "~" || "$base" == "$first" ]]; then
-        echo "$fullpath"
-    else
-        echo "~/$first/…/$base"
-    fi
-}
-
-########################################
 # 🎨 Prompt Colors and Substitution    #
 ########################################
 COLOR_DEF='%f'
@@ -39,7 +23,9 @@ setopt PROMPT_SUBST
 ########################################
 # 💬 Shell Prompt Definition           #
 ########################################
-export PROMPT='${COLOR_DIR}%d ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
+# Path: ~ for home, and past four levels the middle collapses to …
+# (e.g. ~/Library/…/Sem VI/Master_Thesis)
+export PROMPT='${COLOR_DIR}%(5~|%-2~/…/%2~|%~) ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
 
 ########################################
 # 🧹 Clear screen on shell startup     #

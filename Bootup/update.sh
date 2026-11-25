@@ -7,7 +7,11 @@ brew update
 ok "Homebrew update completed"
 
 section "Running: Homebrew Upgrade"
-brew upgrade
+if [ "${BREW_GREEDY:-0}" = 1 ]; then
+    brew upgrade --greedy
+else
+    brew upgrade
+fi
 ok "Homebrew upgrade completed"
 
 if CONDA_BIN="$(find_conda)"; then

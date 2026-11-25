@@ -55,6 +55,55 @@ alias clip="pbcopy <"              # Usage: clip file.txt
 alias paste="pbpaste"              # Outputs clipboard text to stdout
 alias beast="vncviewer shrikar22"
 
+# Shared by serveqr and receiveqr: checks the network and port, then prints
+# the address and its QR code. Usage: _lan_qr <port> <path>
+_lan_qr() {
+  local port="$1" ip
+  ip=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en8 2>/dev/null)
+  if [[ -z "$ip" ]]; then
+    echo "Not connected to Wi-Fi or Ethernet" >&2
+    return 1
+  fi
+  if lsof -nP -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1; then
+    echo "Port $port is already in use, pass another one (e.g. $((port + 1)))" >&2
+    return 1
+  fi
+  local url="http://$ip:$port$2"
+  echo "$url"
+  if command -v qrencode >/dev/null; then
+    qrencode -t ANSIUTF8 -m 2 "$url"
+  else
+    echo "(brew install qrencode to get a QR code here)"
+  fi
+  echo "Ctrl+C to stop"
+}
+
+# Share this folder on your Wi-Fi: scan the QR code to open it on your phone
+# Anyone on the same network can see the folder while it runs
+# Usage: serveqr [port]   (default 8000)
+serveqr() {
+  local port="${1:-8000}"
+  echo "Sharing ${PWD/#$HOME/~} at:"
+  _lan_qr "$port" / || return 1
+  python3 -m http.server "$port"
+}
+
+# Receive files from a phone (Android, iPhone, any browser) into this folder:
+# scan the QR code, pick files, tap Upload
+# Anyone on the same network can upload, and see the folder, while it runs
+# Usage: receiveqr [port]   (default 8000)
+receiveqr() {
+  local port="${1:-8000}"
+  if ! command -v uvx >/dev/null; then
+    echo "receiveqr: needs uv, run: brew install uv" >&2
+    return 1
+  fi
+  echo "Uploads will be saved in ${PWD/#$HOME/~}. Open:"
+  _lan_qr "$port" /upload || return 1
+  # Pinned; uv keeps it in its own cache, separate from conda and pixi
+  uvx uploadserver@6.0.5 "$port"
+}
+
 
 # ================================
 # 🐙 Git Superpowers
@@ -114,10 +163,47 @@ extract() {
   fi
 }
 
-# Fast Process Termination
-# Usage: fnamekill python
+# Process Termination: lists what matches the name, asks, then sends TERM
+# Usage: fnamekill python      (fnamekill -9 python to force-kill)
 fnamekill() {
-  ps aux | grep -i "$1" | grep -v grep | awk '{print $2}' | xargs kill -9
+  local sig=TERM
+  [[ "$1" == -9 ]] && { sig=KILL; shift; }
+  if [[ -z "$1" ]]; then
+    echo "Usage: fnamekill [-9] <process name>" >&2
+    return 1
+  fi
+  # Matches process names only (not full command lines), never this shell
+  local matches
+  matches=$(pgrep -il -- "$1" | grep -v "^$$ ")
+  if [[ -z "$matches" ]]; then
+    echo "fnamekill: no process named like '$1'" >&2
+    return 1
+  fi
+  echo "$matches"
+  read -q -u 0 "?Send $sig to these? (y/N) " || { echo; return 1; }
+  echo
+  echo "$matches" | awk '{print $1}' | xargs kill -s "$sig"
+}
+
+# Open this repo's web page (GitHub, GitLab, ...); outside a repo, your GitHub
+# Usage: gopen
+gopen() {
+  local url
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+      #url=""
+    echo "ADD YOUR URL in $HOME/SystemTaiyaar/rc files/.zsh_aliases"
+  else
+    url=$(git remote get-url origin 2>/dev/null || git remote get-url "$(git remote | head -1)" 2>/dev/null)
+    if [[ -z "$url" ]]; then
+      echo "gopen: this repo has no remote" >&2
+      return 1
+    fi
+    # git@github.com:user/repo.git or ssh://git@host/user/repo -> https://host/user/repo
+    url=${url%.git}
+    url=$(sed -E 's#^(ssh://)?git@([^:/]+)[:/]#https://\2/#; s#^https://[^@/]+@#https://#' <<< "$url")
+  fi
+  echo "Opening $url"
+  open "$url"
 }
 
 # Change the date/time of the LAST commit

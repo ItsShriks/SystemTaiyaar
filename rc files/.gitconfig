@@ -1,0 +1,46 @@
+# Shared git settings, linked to ~/.gitconfig by ./setup.sh rc.
+# Your name and email live in ~/.gitconfig.local (not in this repo).
+
+[init]
+	defaultBranch = main
+
+[core]
+	excludesFile = ~/.gitignore_global
+
+[push]
+	# 'git push' on a new branch sets its upstream, no --set-upstream needed
+	autoSetupRemote = true
+
+[pull]
+	# Replay your commits on top instead of making "Merge branch ..." commits
+	rebase = true
+
+[rebase]
+	# Stash uncommitted changes before a rebase and bring them back after
+	autoStash = true
+
+[fetch]
+	# Drop remote branches that were deleted on the server
+	prune = true
+
+[diff]
+	algorithm = histogram
+
+[merge]
+	# Conflicts also show what the code looked like before both changes
+	conflictStyle = zdiff3
+
+[rerere]
+	# Remember how a conflict was resolved and reuse it next time
+	enabled = true
+
+[branch]
+	# Most recently used branches first
+	sort = -committerdate
+
+[submodule]
+	recurse = false
+
+# Last, so anything in it wins over the settings above
+[include]
+	path = ~/.gitconfig.local

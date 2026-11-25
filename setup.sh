@@ -5,7 +5,7 @@ source "$(dirname "$0")/Bootup/lib.sh"
 
 [ "$(uname -s)" = "Darwin" ] || die "This is the macOS branch. Use the Ubuntu branch on Linux."
 
-# 'all' is for a fresh machine, so it leaves out clean and update.
+# 'all' is for a fresh machine, so it leaves out clean, update and maintain.
 ALL_STEPS="essentials rc ssh apps docker ros"
 
 script_for() {
@@ -18,6 +18,7 @@ script_for() {
         docker)     echo docker.sh ;;
         rc)         echo rc.sh ;;
         update)     echo update.sh ;;
+        maintain)   echo maintain.sh ;;
         *)          return 1 ;;
     esac
 }
@@ -34,6 +35,7 @@ Usage: ./setup.sh [all | <step> ...]
   6) docker       Docker Desktop and XQuartz
   7) rc           Link the rc files into \$HOME
   8) update       Update Homebrew and Conda packages
+  9) maintain     update, move Downloads to iCloud, then clean
   a) all          $ALL_STEPS
 USAGE
 }
@@ -53,6 +55,7 @@ if [ $# -eq 0 ]; then
             6) set -- "$@" docker ;;
             7) set -- "$@" rc ;;
             8) set -- "$@" update ;;
+            9) set -- "$@" maintain ;;
             a|all) set -- "$@" all ;;
             *) die "Unknown choice: $c" ;;
         esac

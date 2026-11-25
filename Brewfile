@@ -16,7 +16,9 @@ brew "mas"
 brew "octave"
 brew "open-mpi"
 brew "pandoc"
+brew "qrencode" # QR codes in the terminal, used by serveqr
 brew "root"
+brew "uv" # Python tool runner, used by receiveqr
 
 # Python: miniforge matches the current setup. Swap to one of these if you prefer.
 cask "miniforge"

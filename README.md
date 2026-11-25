@@ -30,16 +30,17 @@ git clone --single-branch --branch macOS https://github.com/ItsShriks/SystemTaiy
 
 | Step | Script | What it does |
 |---|---|---|
-| `essentials` | `Bootup/essentials.sh` | Homebrew (with Xcode tools), git, node, git identity |
+| `essentials` | `Bootup/essentials.sh` | Homebrew (with Xcode tools), git, node, git name and email (saved in `~/.gitconfig.local`) |
 | `ssh` | `Bootup/ssh-keygen.sh` | Ed25519 key, shown and copied to the clipboard for you to add to GitHub or GitLab |
 | `ros` | `Bootup/ROS.sh` | Pixi and the RoboStack environments in `~/robostack` |
 | `clean` | `Bootup/clean.sh` | Homebrew and Conda cleanup, then `npx mac-cleaner-cli` |
 | `apps` | `Bootup/install.sh` | Checkbox menu of the [Brewfile](Brewfile) apps, then installs what stays ticked |
 | `docker` | `Bootup/docker.sh` | Docker Desktop and XQuartz, optional image build |
-| `rc` | `Bootup/rc.sh` | Links `rc files/` into `$HOME`, backing up what was there to `~/.system-taiyaar-backup` |
+| `rc` | `Bootup/rc.sh` | Links `rc files/` (zsh, git config, global gitignore) into `$HOME`, backing up what was there to `~/.system-taiyaar-backup`. Your git name and email stay out of the repo in `~/.gitconfig.local` |
 | `update` | `Bootup/update.sh` | Updates Homebrew and Conda packages |
+| `maintain` | `Bootup/maintain.sh` | `update` (with `brew upgrade --greedy`), moves `~/Downloads` to iCloud Drive without overwriting, then `clean` |
 
-Every step can be re-run safely. `clean` and `update` are not part of `all`.
+Every step can be re-run safely. `clean`, `update` and `maintain` are not part of `all`.
 
 ---
 

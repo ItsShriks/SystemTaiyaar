@@ -21,10 +21,13 @@ brew install git node || die "brew install failed"
 ok "Essentials installed"
 
 section "Git identity"
+# Saved in ~/.gitconfig.local, which the shared rc files/.gitconfig includes.
+# 'git config --get' (no --file) also finds a name set in an older ~/.gitconfig.
+LOCAL_GITCONFIG="$HOME/.gitconfig.local"
 for key in user.name user.email; do
-    if [ -z "$(git config --global "$key")" ] && [ -t 0 ]; then
+    if [ -z "$(git config --get "$key")" ] && [ -t 0 ]; then
         read -r -p "git $key: " value
-        [ -n "$value" ] && git config --global "$key" "$value"
+        [ -n "$value" ] && git config --file "$LOCAL_GITCONFIG" "$key" "$value"
     fi
-    echo "$key = $(git config --global "$key")"
+    echo "$key = $(git config --get "$key")"
 done
